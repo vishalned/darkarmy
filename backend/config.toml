@@ -3,6 +3,6 @@ title = "Chatbot config"
 top_k_retriever = 2000
 top_k_reader = 5
 
-model_path = ""
+model_path = "deepset/bert-large-uncased-whole-word-masking-squad2"
 db_path = "sqlite:////qa.db"
 

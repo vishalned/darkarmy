@@ -1,6 +1,8 @@
 import os
 import toml
-from post_processing import *
+
+from backend.post_processing import *
+#from post_processing import *
 
 cfg_file = ("config.toml")
 cfg = toml.load(open(cfg_file), _dict=dict)
@@ -8,23 +10,6 @@ cfg = toml.load(open(cfg_file), _dict=dict)
 finder = get_finder(os.path.join(os.path.dirname(os.path.realpath(__file__)), "dataset"), abstracts_only=False)
 
 def get_results(question, finder=finder, top_k_retriever=cfg["top_k_retriever"], top_k_reader=cfg["top_k_reader"], candidate_doc_ids=None):
-    """
-    Builds a list of Result objects for a given question.
-    
-    :param finder: A haystack Finder instance.
-    :type finder: Finder
-    :param top_k_retriever: The number of top document-sections obtained by the retriever.
-    :type top_k_retriever: int
-    :param top_k_reader: The number of top answers obtained by the reader.
-    :type top_k_reader: int
-    :param candidate_doc_ids: A list of doc ids to filter on.
-    :type candidate_doc_ids: list
-    :param question: A question to be answered.
-    :type question: str
-    ...
-    :return: A list of Result instances.
-    :rtype: list
-    """
     paragraphs, meta_data = finder.retriever.retrieve(question, top_k=top_k_retriever, candidate_doc_ids=candidate_doc_ids)
     results = []
 
@@ -58,6 +43,7 @@ def get_results(question, finder=finder, top_k_retriever=cfg["top_k_retriever"],
     
     return results
 
+# DEMO
 question = "What is AI all about?"
-results = get_results(question)
+results = get_results(question, finder)
 html_string = generate_html(question, results)

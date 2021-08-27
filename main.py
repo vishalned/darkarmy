@@ -5,7 +5,7 @@ from bokeh.models.widgets import Button
 from bokeh.models import CustomJS
 from streamlit_bokeh_events import streamlit_bokeh_events
 
-
+import backend.inference
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 st.title('Dark Army - Your AI tutor ...')
@@ -46,8 +46,6 @@ result = streamlit_bokeh_events(
 if result:
     if "GET_TEXT" in result:
         st.write(result.get("GET_TEXT"))
-
-
 
 #text to speech
 text = st.text_input("Say what ?")

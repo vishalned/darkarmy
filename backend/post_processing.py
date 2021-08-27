@@ -4,6 +4,7 @@ import os
 import toml
 import tqdm
 import re
+
 from xml.etree import ElementTree as ET
 from pathlib import Path
 
@@ -124,24 +125,7 @@ class Result(object):
         self.text = text
         self.spans = spans
 
-def get_results(finder, top_k_retriever, top_k_reader, candidate_doc_ids, question):
-    """
-    Builds a list of Result objects for a given question.
-    
-    :param finder: A haystack Finder instance.
-    :type finder: Finder
-    :param top_k_retriever: The number of top document-sections obtained by the retriever.
-    :type top_k_retriever: int
-    :param top_k_reader: The number of top answers obtained by the reader.
-    :type top_k_reader: int
-    :param candidate_doc_ids: A list of doc ids to filter on.
-    :type candidate_doc_ids: list
-    :param question: A question to be answered.
-    :type question: str
-    ...
-    :return: A list of Result instances.
-    :rtype: list
-    """
+def get_results(question, finder, top_k_retriever=cfg["top_k_retriever"], top_k_reader=cfg["top_k_reader"], candidate_doc_ids=None):
     paragraphs, meta_data = finder.retriever.retrieve(question, top_k=top_k_retriever, candidate_doc_ids=candidate_doc_ids)
     results = []
 
@@ -174,6 +158,7 @@ def get_results(finder, top_k_retriever, top_k_reader, candidate_doc_ids, questi
             results.append(result)
     
     return results
+
 
 def add_search_result_element(container, result):
     """
