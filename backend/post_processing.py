@@ -159,7 +159,6 @@ def get_results(question, finder, top_k_retriever=cfg["top_k_retriever"], top_k_
     
     return results
 
-
 def add_search_result_element(container, result):
     """
     Adds a search result node to an html container.

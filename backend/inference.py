@@ -1,8 +1,8 @@
 import os
 import toml
 
-from backend.post_processing import *
-#from post_processing import *
+#from backend.post_processing import *
+from post_processing import *
 
 cfg_file = ("config.toml")
 cfg = toml.load(open(cfg_file), _dict=dict)
@@ -45,5 +45,5 @@ def get_results(question, finder=finder, top_k_retriever=cfg["top_k_retriever"],
 
 # DEMO
 question = "What is AI all about?"
-results = get_results(question, finder)
+results = get_results(question)
 html_string = generate_html(question, results)
