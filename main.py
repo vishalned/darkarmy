@@ -52,6 +52,10 @@ if result:
     if "GET_TEXT" in result:
         st.write(result.get("GET_TEXT"))
 
+if len(user_input) == 0 and result: 
+    user_input = result.get("GET_TEXT")
+    
+
 #text to speech
 # text = st.text_input("Say what ?")
 # tts_button = Button(label="Speak", width=100)
