@@ -7,12 +7,11 @@ from streamlit_bokeh_events import streamlit_bokeh_events
 
 from backend.inference import * 
 
-@st.cache(allow_output_mutation = True, suppress_st_warning=True)
+#@st.cache(allow_output_mutation = True, suppress_st_warning=True)
 def finder_func():
     return get_finder("backend/dataset", abstracts_only=False)
 
 finder = finder_func()
-
 
 #user input
 st.set_option('deprecation.showfileUploaderEncoding', False)
@@ -69,11 +68,9 @@ if result:
 # st.bokeh_chart(tts_button)
 
 n_results = st.slider('Number results?', 1, 5, 3)
-
 run_button = st.button('run')
 
 if run_button:
-    
-    results = get_results(finder=finder,candidate_doc_ids=None, top_k_retriever=2000, top_k_reader=n_results, question=user_input)
+    results = get_results(finder=finder,candidate_doc_ids=None, top_k_retriever=25, top_k_reader=n_results, question=user_input)
     html_string = generate_html(user_input, results)
-    html_out = st.components.v1.html(html=html_string,height=300,scrolling=True)
+    html_out = st.components.v1.html(html=html_string,height=500,scrolling=True)

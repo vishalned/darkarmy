@@ -160,7 +160,7 @@ def get_finder(data_directory, abstracts_only=False):
         abstracts_only=abstracts_only)
     retriever = TfidfRetriever(document_store=document_store)
     reader = FARMReader(
-        model_name_or_path="deepset/bert-large-uncased-whole-word-masking-squad2", 
+        model_name_or_path="backend/my_model", 
         use_gpu=True)
         #model_name_or_path="gdario/biobert_bioasq", 
         #use_gpu=False)
@@ -309,3 +309,4 @@ def generate_html(question, results):
         ET.SubElement(container, "hr")
     html = str(ET.tostring(container))[2:-1]
     return html
+    
