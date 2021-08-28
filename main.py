@@ -7,6 +7,14 @@ from streamlit_bokeh_events import streamlit_bokeh_events
 
 from backend.inference import * 
 
+@st.cache(allow_output_mutation = True, suppress_st_warning=True)
+def finder_func():
+    return get_finder("backend/dataset", abstracts_only=False)
+
+finder = finder_func()
+
+
+#user input
 st.set_option('deprecation.showfileUploaderEncoding', False)
 st.title('Dark Army - Your AI tutor ...')
 user_input = st.text_area("Enter the Question", '')
@@ -46,23 +54,26 @@ if result:
         st.write(result.get("GET_TEXT"))
 
 #text to speech
-text = st.text_input("Say what ?")
-tts_button = Button(label="Speak", width=100)
+# text = st.text_input("Say what ?")
+# tts_button = Button(label="Speak", width=100)
 
 
-tts_button.js_on_event("button_click", CustomJS(code=f"""
-    var u = new SpeechSynthesisUtterance();
-    u.text = "{text}";
-    u.lang = 'en-US';
+# tts_button.js_on_event("button_click", CustomJS(code=f"""
+#     var u = new SpeechSynthesisUtterance();
+#     u.text = "{text}";
+#     u.lang = 'en-US';
 
-    speechSynthesis.speak(u);
-    """))
+#     speechSynthesis.speak(u);
+#     """))
 
-st.bokeh_chart(tts_button)
+# st.bokeh_chart(tts_button)
 
 n_results = st.slider('Number results?', 1, 5, 3)
 
-finder = get_finder("backend/dataset", abstracts_only=False)
-results = get_results(finder=finder,candidate_doc_ids=None, top_k_retriever=2000, top_k_reader=n_results, question=user_input)
-html_string = generate_html(user_input, results)
-html_out = st.components.v1.html(html=html_string,height=300,scrolling=True)
+run_button = st.button('run')
+
+if run_button:
+    
+    results = get_results(finder=finder,candidate_doc_ids=None, top_k_retriever=2000, top_k_reader=n_results, question=user_input)
+    html_string = generate_html(user_input, results)
+    html_out = st.components.v1.html(html=html_string,height=300,scrolling=True)
